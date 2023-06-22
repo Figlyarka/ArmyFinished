@@ -54,6 +54,20 @@ namespace ArmyLibrary.UnitTests
 
             Assert.That(serviceman.GetInfo(), Is.EqualTo(expectedInfo));
         }
-        
+
+        [Test]
+        public void CompareToTest()
+        {
+            var john = new Serviceman("John", "Fogerty", 122) { NumMillitaryUnit = 223 };
+            var alex = new Serviceman("Alex", "Smith", 235) { NumMillitaryUnit = 706 };
+            var peter = new Serviceman("Peter", "Gabriel", 233) { NumMillitaryUnit = 915 };
+            var tom = new Serviceman("Tom", "Fogerty", 532) { NumMillitaryUnit = 308 };
+
+            Assert.That(john.CompareTo(tom), Is.LessThan(0));
+            Assert.That(peter.CompareTo(alex), Is.GreaterThan(0));
+            Assert.That(tom.CompareTo(tom), Is.EqualTo(0));
+            Assert.That(alex.CompareTo(peter), Is.LessThan(0));
+
+        }
     }
 }

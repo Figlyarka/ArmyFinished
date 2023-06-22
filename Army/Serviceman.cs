@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Army
 {
-    
-    public class Serviceman 
+    public class Serviceman : IComparable<Serviceman>
     {
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -29,8 +28,7 @@ namespace Army
             Surname = surname;
             NumMillitaryTicket = numMillitaryTicket;
         }
-
-        public string GetInfo()
+        public virtual string GetInfo()
         {
             var typeofservice = "";
             if (TypeOfService == TypeOfService.Contract)
@@ -50,5 +48,57 @@ namespace Army
                 return Surname.CompareTo(other.Surname);
             return Name.CompareTo(other.Name);
         }
+
+        public class CommandStaff : Serviceman
+        {
+            public string DivisionName { get; set; }
+            public string Post { get; set; }
+
+            public CommandStaff(string name, string surname, int numMillitaryTicket, string divisionName, string post) : base(name, surname, numMillitaryTicket)
+            {
+                DivisionName = divisionName;
+                Post = post;
+            }
+
+            public override string GetInfo()
+            {
+                return base.GetInfo() + $" Название подразделения: {DivisionName}. Должность: {Post}.";
+            }
+        }
+
+        public class ManagementBodies : Serviceman
+        {
+            public string CountyName { get; set; }
+            public string Post { get; set; }
+
+            public ManagementBodies(string name, string surname, int numMillitaryTicket, string countyName, string post) : base(name, surname, numMillitaryTicket)
+            {
+                CountyName = countyName;
+                Post = post;
+            }
+
+            public override string GetInfo()
+            {
+                return base.GetInfo() + $" Название округа: {CountyName}. Должность: {Post}.";
+            }
+        }
+
+        public class Veteran : Serviceman
+        {
+            public int LengthOfService { get; set; }
+            public int PensionAmount { get; set; }
+
+            public Veteran(string name, string surname, int numMillitaryTicket, int lengthOfService, int pensionAmount) : base(name, surname, numMillitaryTicket)
+            {
+                LengthOfService = lengthOfService;
+                PensionAmount = pensionAmount;
+            }
+
+            public override string GetInfo()
+            {
+                return base.GetInfo() + $" Выслуга лет: {LengthOfService} лет. Размер пенсии: {PensionAmount} руб.";
+            }
+        }
+
     }
 }
